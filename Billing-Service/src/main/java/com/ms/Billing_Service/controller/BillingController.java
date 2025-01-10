@@ -41,7 +41,7 @@ public class BillingController {
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error occurred: " + e.getMessage());
+            return ResponseEntity.ok("An error occurred: " + e.getMessage());
         }
     }
 

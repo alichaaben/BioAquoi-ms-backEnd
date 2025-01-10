@@ -3,6 +3,7 @@ package com.ms.Project_Service.security.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,7 +40,10 @@ public class WebSecurityConfig {
                 
                 // .requestMatchers("/roles/**").hasRole("Admin")
 
-                .requestMatchers("/projects/**").hasAnyRole("Admin","Technician")
+                .requestMatchers(HttpMethod.GET, "/projects/**").hasAnyRole("Admin", "Technician")
+                .requestMatchers(HttpMethod.POST, "/projects").hasRole("Admin")
+                .requestMatchers(HttpMethod.PUT, "/projects/**").hasRole("Admin")
+                .requestMatchers(HttpMethod.DELETE, "/projects/**").hasRole("Admin")
 
                 .anyRequest().authenticated()
             )

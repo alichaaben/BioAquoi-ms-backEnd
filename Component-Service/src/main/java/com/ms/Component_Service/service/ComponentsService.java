@@ -1,18 +1,17 @@
 package com.ms.Component_Service.service;
 
 import java.util.List;
-
-import com.ms.Component_Service.entity.Components;
+import com.ms.Component_Service.dto.ComponentsDto;
 
 public interface ComponentsService {
 
-    Components findById(Long id);
+    ComponentsDto findById(Long id);
 
-    List<Components> findAll();
+    List<ComponentsDto> findAll();
 
-    Components insert(Components Entity);
+    ComponentsDto insert(ComponentsDto componentsDto);
 
-    Components update(Components Entity);
+    ComponentsDto update(ComponentsDto componentsDto);
 
     void deleteById(Long id);
 }

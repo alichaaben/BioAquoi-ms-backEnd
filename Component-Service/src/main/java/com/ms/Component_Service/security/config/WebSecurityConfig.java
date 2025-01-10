@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -33,11 +35,8 @@ public class WebSecurityConfig {
             .cors(Customizer.withDefaults())
             
             .authorizeHttpRequests(auth -> auth
-                // .requestMatchers("/auth/login/**").permitAll()
-                
-                // .requestMatchers("/roles/**").hasRole("Admin")
 
-                // .requestMatchers("/users/**").hasRole("Admin")
+            .requestMatchers("/components/**").hasAnyRole("Admin","Technician")
 
                 .anyRequest().authenticated()
             )
@@ -52,6 +51,16 @@ public class WebSecurityConfig {
     @Bean
     JwtDecoder jwtDecoder(){
         return NimbusJwtDecoder.withPublicKey(rsaKeyRecord.publicKey()).build();
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        grantedAuthoritiesConverter.setAuthorityPrefix("");
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("scope");
+        JwtAuthenticationConverter authenticationConverter = new JwtAuthenticationConverter();
+        authenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        return authenticationConverter;
     }
         
 

@@ -1,4 +1,4 @@
-package com.ms.Gateway_Service; 
+package com.ms.Gateway_Service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

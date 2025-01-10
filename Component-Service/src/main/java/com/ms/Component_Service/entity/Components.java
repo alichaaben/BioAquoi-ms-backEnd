@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,15 +19,19 @@ public class Components {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long materialId;
+    private Long composentId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "project_id", nullable = false)
-//    private Project project;
+    @Column(nullable = false)
+    private String componentName;
 
     @Column(nullable = false)
     private int usageQuantity;
 
     @Column(nullable = false)
     private int quantityInStock;
+
+    @ElementCollection
+    @CollectionTable(name = "component_project", joinColumns = @JoinColumn(name = "component_id"))
+    @Column(name = "projet_id")
+    private Set<Long> projetIds = new HashSet<>();
 }
